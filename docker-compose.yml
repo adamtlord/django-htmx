@@ -1,0 +1,38 @@
+version: "3.8"
+
+volumes:
+  static-data:
+
+services:
+
+  db:
+    platform: linux/amd64
+    restart: unless-stopped
+    image: postgres:12.8-alpine
+    env_file:
+      - ./django_backend/.env
+
+  backend:
+    restart: unless-stopped
+    env_file:
+      - ./django_backend/.env
+    build:
+      context: ./django_backend
+      target: dev
+      dockerfile: ./Dockerfile
+      args:
+        requirements_file: "base.txt"
+    ports:
+      - "8111:8000"
+    # Use for when you need the container up but not the dev server (e.g., initial migrations).
+    # Note that the config change will trigger compose to reinstance the container.
+    # command: bash -c "waitforit -host=db -port=5432 --timeout 30 && echo ready && sleep infinity"
+    command: bash -c "waitforit -host=db -port=5432 --timeout 30 &&
+          python3 /code/manage.py collectstatic --no-input &&
+          python3 /code/manage.py migrate &&
+          python3 /code/manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+    volumes:
+      - static-data:/static
+      - ./django_backend/:/code

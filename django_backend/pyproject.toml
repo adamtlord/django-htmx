@@ -1,0 +1,52 @@
+[tool.poetry]
+name = "tivix-django-backend-base"
+version = "0.2.0"
+description = ""
+authors = ["Sumit Chachra <sumit@tivix.com>, Mikolaj Kosmal <mikolaj.kosmal@tivix.com>, Dhruv Singh <dhruv.singh@tivix.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8.5"
+Django = "^4.0.5"
+
+# Django packages
+django-extensions = "^3.0.*"
+
+# Python packages
+psycopg2 = "2.8.*"
+
+# Other misc.
+flake8 = "3.8.*"
+
+# Gunicorn
+gunicorn = "^20.0.4"
+gevent = "^20.9.0"
+tzdata = "^2022.1"
+
+[tool.poetry.dev-dependencies]
+black = {version = "19.10b0", allow-prereleases = true, python = "^3.8", markers = "platform_python_implementation == 'CPython'"}
+django-fixture-magic = "0.1.5"
+django-debug-toolbar ="2.2"
+tblib = "1.6.*"
+
+[build-system]
+requires = ["poetry>=1.0"]
+build-backend = "poetry.masonry.api"
+
+[tool.black]
+line-length = 120
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  | migrations
+  | snapshots
+)/
+'''

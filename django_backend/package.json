@@ -1,0 +1,11 @@
+{
+  "name": "django_htmx",
+  "version": "0.0.1",
+  "description": "An example Django project taking a minimal-js approach",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam Lord",
+  "license": "ISC"
+}
