@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="">
 
@@ -6,20 +7,23 @@
   <title></title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta property="og:title" content="">
-  <meta property="og:type" content="">
-  <meta property="og:url" content="">
-  <meta property="og:image" content="">
-
-  <link rel="manifest" href="site.webmanifest">
-  {% comment %} <link rel="apple-touch-icon" href="icon.png"> {% endcomment %}
-  <!-- Place favicon.ico in the root directory -->
-  <meta name="theme-color" content="#fafafa">
+  <link href="{% static '/dist/output.css' %}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static 'ico/favicon.png' %}"/>
+  <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
+  <script src="https://unpkg.com/htmx.org@1.7.0" integrity="sha384-EzBXYPt0/T6gxNp0nuPtLkmRpmDBbjg6WmCUZRLXBBwYYmwAUxzlSGej0ARHX0Bo" crossorigin="anonymous"></script>
 </head>
 
 <body>
-{% block body %}{% endblock %}
+{% block body %}
+<div class="bg-white">
+  {% block navbar %}
+  {% include 'fragments/navbar.html' %}
+  {% endblock %}
+  {% block main %}{% endblock %}
+  {% block footer %}
+  {% include 'fragments/footer.html' %}
+  {% endblock %}
+</div>
+{% endblock %}
 </body>
-
 </html>

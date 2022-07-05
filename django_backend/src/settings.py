@@ -174,14 +174,16 @@ DATA_VOLUME = "/data"
 UPLOADS_DIR_NAME = "uploads"
 MEDIA_URL = "/%s/" % UPLOADS_DIR_NAME
 MEDIA_ROOT = os.path.join(DATA_VOLUME, '%s' % UPLOADS_DIR_NAME)
-STATIC_ROOT = "%s/staticserve" % DATA_VOLUME
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-STATIC_URL = "/django_static/"
+STATIC_URL = "/static/"
+STATIC_ROOT = "/static"
 STATICFILES_DIRS = [
-    os.path.join(DATA_VOLUME, 'static'),
+    os.path.join(BASE_DIR, "src", "static"),
+]
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    # "compressor.finders.CompressorFinder",
 ]
 
 # Log settings
