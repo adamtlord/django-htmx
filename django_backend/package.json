@@ -2,19 +2,9 @@
   "name": "django_htmx",
   "version": "0.0.1",
   "description": "An example Django project taking a minimal-js approach",
-  "main": "index.js",
   "scripts": {
-    "dev:css": "npx tailwindcss -i ./src/static/css/index.css -o ./src/static/dist/style.css --watch",
-    "build:css": "npx tailwindcss -i ./src/static/css/index.css -o ./src/static/dist/style.css",
-    "dev:js": "parcel watch ./src/static/js/index.js",
-    "build:js": "parcel build ./src/static/js/index.js",
-    "dev": "concurrently npm:dev:*",
-    "build": "concurrently npm:build:*"
-  },
-  "targets": {
-    "default": {
-      "distDir": "./src/static/dist"
-    }
+    "dev": "npx tailwindcss -i ./src/static/css/index.css -o ./src/static/dist/style.css --watch",
+    "build": "npx tailwindcss -i ./src/static/css/index.css -o ./src/static/dist/style.css"
   },
   "author": "Adam Lord",
   "license": "ISC",
@@ -23,10 +13,5 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "tailwindcss": "^3.1.4"
-  },
-  "dependencies": {
-    "alpinejs": "^3.10.2",
-    "concurrently": "^7.2.2",
-    "parcel": "^2.6.2"
   }
 }

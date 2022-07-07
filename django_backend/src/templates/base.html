@@ -1,12 +1,12 @@
 <!doctype html>
 <html
-  x-data="app"
+  x-data="App"
   x-bind:class="{ 'dark': darkMode }"
   lang=""
 >
 <head>
   <meta charset="utf-8">
-  <title>Djanglow JS</title>
+  <title>DjanGlow JS</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {% include 'fragments/header_includes.html' %}
@@ -17,12 +17,13 @@
 <div class="flex flex-col min-h-screen">
   {% include 'fragments/navbar.html' %}
   <main class="flex-grow">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto px-4">
       {% block main %}{% endblock %}
     </div>
   </main>
   {% include 'fragments/footer.html' %}
 </div>
 {% endblock %}
+{% include 'fragments/footer_includes.html' %}
 </body>
 </html>
