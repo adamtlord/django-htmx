@@ -9,7 +9,7 @@ RUN apk update
 RUN apk add --upgrade --no-cache "postgresql-client" "postgresql-contrib" "postgresql-dev" bash curl
 RUN apk add --upgrade --no-cache py-pip g++ linux-headers gcc make libffi-dev uwsgi-python uwsgi wget
 
-RUN apk add --upgrade --no-cache python3 python3-dev
+RUN apk add --upgrade --no-cache python3 python3-dev openssl-dev cargo
 
 ENV WAITFORIT_VERSION="v2.2.0"
 RUN curl -o /usr/local/bin/waitforit -sSL https://github.com/maxcnunes/waitforit/releases/download/$WAITFORIT_VERSION/waitforit-linux_amd64 && \

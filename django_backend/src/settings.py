@@ -3,7 +3,6 @@ import sys
 import json
 
 
-
 AWS_REGION = os.getenv("AWS_REGION") or "eu-west-1"
 
 
@@ -18,13 +17,12 @@ def get_secret(secret_name, default_value=None, path="", required=True, region_n
             return default_value
 
 
-
-#Get the ENV settings
-ENV = get_secret('ENV')
+# Get the ENV settings
+ENV = get_secret("ENV")
 if not ENV:
-    raise Exception('Environment variable ENV is required!')
+    raise Exception("Environment variable ENV is required!")
 
-#Environment settings
+# Environment settings
 DEBUG = False
 IS_DEV = False
 IS_STAGING = False
@@ -35,14 +33,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # project root and add "apps" to the path
 PROJECT_ROOT = BASE_DIR
-sys.path.append(os.path.join(PROJECT_ROOT, 'apps/'))
+sys.path.append(os.path.join(PROJECT_ROOT, "apps/"))
 
-SECRET_KEY = get_secret('SECRET_KEY')
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # Initadmin Users (username, email, password)
-ADMINS = (
-    ('admin', 'admin@tivix.com', 'admin!rules'),
-)
+ADMINS = (("admin", "admin@tivix.com", "admin!rules"),)
 
 ALLOWED_HOSTS = []
 
@@ -52,105 +48,100 @@ ENV_APPS = []
 ENV_MIDDLEWARES = []
 
 
-ELASTIC_APM_DEBUG = get_secret('ELASTIC_APM_DEBUG', default_value=False, required=False)
-
-if ELASTIC_APM_DEBUG:
-    ENV_APPS.append('elasticapm.contrib.django')
-    ENV_MIDDLEWARES.append(
-        'elasticapm.contrib.django.middleware.TracingMiddleware'
-    )
-
-
 # Application definition
-PROJECT_APPS = [
-    'core',
-    'marketing'
-]
+PROJECT_APPS = ["core", "marketing"]
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django_extensions',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django_extensions",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
 ]
 
 INSTALLED_APPS += ENV_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 MIDDLEWARE = ENV_MIDDLEWARES + MIDDLEWARE
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = "urls"
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'src', 'templates')
+TEMPLATES_DIR = os.path.join(BASE_DIR, "src", "templates")
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'debug': DEBUG,
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [TEMPLATES_DIR],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "debug": DEBUG,
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'wsgi.application'
+WSGI_APPLICATION = "wsgi.application"
 
-
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
 
 # Internationalization
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+SITE_ID = 1
 
-ELASTIC_APM_APP_NAME=get_secret('ELASTIC_APM_APP_NAME')
-ELASTIC_APM_SECRET_TOKEN=get_secret('ELASTIC_APM_SECRET_TOKEN')
-
-ELASTIC_APM = {
-   'APP_NAME': get_secret('ELASTIC_APM_APP_NAME'),
-   'SECRET_TOKEN': get_secret('ELASTIC_APM_SECRET_TOKEN'),
-   'SERVER_URL': get_secret('ELASTIC_APM_SERVER_URL'),
-   'DEBUG': ELASTIC_APM_DEBUG, # when django's DEBUG is set to true and apm debug is false, no metrics will be sent to apm server
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        "APP": {"client_id": "8213512841339294e2fe", "secret": "d8ef43042b6e11c08487d759ec0d66c7375e8616", "key": ""}
+    }
 }
 
 ##
@@ -173,7 +164,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 4194304  # 4mb
 DATA_VOLUME = "/data"
 UPLOADS_DIR_NAME = "uploads"
 MEDIA_URL = "/%s/" % UPLOADS_DIR_NAME
-MEDIA_ROOT = os.path.join(DATA_VOLUME, '%s' % UPLOADS_DIR_NAME)
+MEDIA_ROOT = os.path.join(DATA_VOLUME, "%s" % UPLOADS_DIR_NAME)
 
 STATIC_URL = "/static/"
 STATIC_ROOT = "/static"
@@ -194,12 +185,27 @@ LOGGING = {
         "verbose": {"format": "[django] %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"}
     },
     "handlers": {
-        "console": {"level": "INFO", "class": "logging.StreamHandler", "stream": sys.stdout, "formatter": "verbose",},
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "stream": sys.stdout,
+            "formatter": "verbose",
+        },
     },
     "loggers": {
-        "": {"handlers": ["console"], "level": "INFO", "propagate": True,},
-        "django": {"handlers": ["console"], "level": "ERROR",},
-        "huey.consumer": {"handlers": ["console"], "level": "INFO",},
+        "": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django": {
+            "handlers": ["console"],
+            "level": "ERROR",
+        },
+        "huey.consumer": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
     },
 }
 
@@ -222,25 +228,8 @@ if ENV == "dev":
     TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 
 
-ENV_LOGGING = {
-    'handlers': {},
-    'loggers': {}
-}
+ENV_LOGGING = {"handlers": {}, "loggers": {}}
 
-if ELASTIC_APM_DEBUG:
-    ENV_LOGGING['handlers'].update({
-        'elasticapm': {
-            'level': 'WARNING',
-            'class': 'elasticapm.contrib.django.handlers.LoggingHandler',
-        }
-    })
-    ENV_LOGGING['loggers'].update({
-        'elasticapm.errors': {
-            'level': 'ERROR',
-            'handlers': ['console'],
-            'propagate': False,
-        }
-    })
 
-LOGGING['handlers'].update(ENV_LOGGING['handlers'])
-LOGGING['loggers'].update(ENV_LOGGING['loggers'])
+LOGGING["handlers"].update(ENV_LOGGING["handlers"])
+LOGGING["loggers"].update(ENV_LOGGING["loggers"])

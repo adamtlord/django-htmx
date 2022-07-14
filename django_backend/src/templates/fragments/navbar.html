@@ -1,4 +1,4 @@
-<header class="bg-gray-100 dark:bg-gray-900">
+<header class="bg-gray-100 dark:bg-gray-900" x-data="{ open: false }" x-title="AuthModal" @keydown.window.escape="open = false">
   <div class="flex justify-between items-center max-w-7xl mx-auto px-4 py-6">
     <div>
       <a href="/">DjangLow JS</a>
@@ -16,28 +16,54 @@
         </li>
       </ul>
     </nav>
-    <div>
-      <button @click="toggleDarkMode" type="button"
-        class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none "
-        role="switch" aria-checked="false" x-bind:class="darkMode ? 'bg-sky-900' : 'bg-sky-300'">
-        <span class="sr-only">Dark mode</span>
-        <span
-          class="pointer-events-none relative inline-block h-5 w-5 rounded-fullshadow transform ring-0 transition ease-in-out duration-200"
-          x-bind:class="darkMode ? 'translate-x-5' : 'translate-x-0'">
+    <div class="flex">
+      <ul class="flex space-x-4">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
+        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        {% else %}
+        <li><button
+            hx-get="{% url 'account_login' %}"
+            hx-target="#authModal"
+            @click="open = true">Log in</button></li>
+        <li><button
+          hx-get="{% url 'account_signup' %}"
+          hx-target="#authModal"
+          @click="open = true">Register</button></li>
+        {% endif %}
+        <li>
+          <button @click="toggleDarkMode" type="button"
+          class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none "
+          role="switch" aria-checked="false" x-bind:class="darkMode ? 'bg-sky-900' : 'bg-sky-200'">
+          <span class="sr-only">Dark mode</span>
           <span
-            class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-            aria-hidden="true"
-            x-bind:class="darkMode ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'">
-            🌞
+            class="pointer-events-none relative inline-block h-5 w-5 rounded-fullshadow transform ring-0 transition ease-in-out duration-200"
+            x-bind:class="darkMode ? 'translate-x-5' : 'translate-x-0'">
+            <span
+              class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+              aria-hidden="true"
+              x-bind:class="darkMode ? 'opacity-0 ease-out duration-100' : 'opacity-100 ease-in duration-200'">
+              🌞
+            </span>
+            <span
+              class="ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+              aria-hidden="true"
+              x-bind:class="darkMode ? 'opacity-100 ease-in duration-200' : 'opacity-0 ease-out duration-100'">
+              🌚
+            </span>
           </span>
-          <span
-            class="ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
-            aria-hidden="true"
-            x-bind:class="darkMode ? 'opacity-100 ease-in duration-200' : 'opacity-0 ease-out duration-100'">
-            🌚
-          </span>
-        </span>
-      </button>
+        </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div x-show="open" class="relative z-10" aria-labelledby="modal-title" x-ref="dialog" aria-modal="true">
+    <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div class="fixed z-10 inset-0 overflow-y-auto">
+      <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+        <div id="authModal" x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" x-description="Modal panel, show/hide based on modal state." class="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-sm sm:w-full sm:p-6" @click.away="open = false">
+        </div>
+      </div>
     </div>
   </div>
 </header>

@@ -1,0 +1,26 @@
+{% load form_tags %}
+<div id="id_{{ form_field.html_name }}_container"
+  class="control field has-name{% if css_classes %} {{ css_classes }}{% endif %}{% if form_field.errors %} has-error{% endif %}">
+  <div class="file{% if css_classes %} {{ css_classes }}{% endif %}">
+    <label class="file-label">
+      <input id="id_{{ form_field.html_name }}" class="file-input" type="file" name="{{ form_field.name }}">
+      <span class="file-cta button">
+        <span class="file-label">
+          Choose a {% if form_field.value %} new {% endif %}file
+        </span>
+        <span class="file-icon">
+          <span class="material-icons">
+            cloud_upload
+            </span>
+        </span>
+      </span>
+      <div id="filename_{{ form_field.html_name }}" class="file-name"></div>
+    </label>
+    <p class="label" for="id_{{ form_field.html_name }}">{{ form_field.label }}</p>
+  </div>
+</div>
+  <script>
+  document.getElementById('id_{{ form_field.html_name }}').addEventListener('change', function (event) {
+    document.getElementById('filename_{{ form_field.html_name }}').textContent = event.srcElement.files[0].name;
+  });
+</script>

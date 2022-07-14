@@ -1,0 +1,9 @@
+<input
+    type="{{ type }}"
+    name="{{ field.html_name }}"
+    value="{{ field.value|floatformat:places }}"
+    step="{{ step }}"
+    placeholder="{{ field.field.widget.attrs.placeholder|floatformat:places }}"
+    class="form-control"
+    id="id_{{ field.html_name }}"
+>
