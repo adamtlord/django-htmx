@@ -1,6 +1,6 @@
 {% load form_tags %}
 <label id="id_{{ form_field.html_name }}_container" class="block{% if css_classes %} {{ css_classes }}{% endif %}{% if form_field.errors %} has-error{% endif %}">
-    <span class="text-gray-700">{{ form_field.label }}{% if form_field.field.required %} <span class="req">*</span>{% endif %}</span>
+    <span>{{ form_field.label }}{% if form_field.field.required %} <span class="req">*</span>{% endif %}</span>
     {{ form_field|add_class:'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50' }}
     {% if form_field.help_text %}
         <span class="help">{{ form_field.help_text }}</span>
