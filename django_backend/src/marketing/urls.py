@@ -1,8 +1,9 @@
 from django.urls import path
 
-from . import views
+from marketing.views import HomePageView, favicon
 
 
 urlpatterns = [
-    path("", views.HomePageView.as_view(), name="home"),
+    path("favicon.ico", favicon),
+    path("", HomePageView.as_view(), name="home"),
 ]

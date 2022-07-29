@@ -1,0 +1,21 @@
+{% load form_tags %}
+<div class="pb-4 mb-4 border-b border-gray-200 dark:border-gray-600 flex justify-between">
+  <h3 class="text-xl leading-6 font-bold">Sign up</h3>
+  <p><a class="text-green-600 underline hover:no-underline" href hx-get="{% url 'account_login' %}" hx-target="#authModal">Log in</a></p>
+</div>
+<form hx-post="{% url 'account_signup_view' %}" hx-target="#authModal">
+  {% csrf_token %}
+  <div class="space-y-5">
+    {% include 'fragments/non_field_errors.html' %}
+  {% csrf_token %}
+  {% for field in form %}
+      {% render_form_field field %}
+    {% endfor %}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  </div>
+  <div class="mt-5 sm:mt-6">
+    <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">Sign Up</button>
+  </div>
+</form>

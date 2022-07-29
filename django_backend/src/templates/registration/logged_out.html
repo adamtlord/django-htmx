@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="my-12">
+  <h1 class="text-5xl pb-6 text-green-700 dark:text-green-200 font-bold tracking-tight">You have been <span class="font-thin text-green-500">logged out.</span></h1>
+  <p class="my-6"><a class="text-green-600 underline hover:no-underline" href="{% url 'login'%}">Click here to login again.</a></p>
+</div>
+{% endblock %}

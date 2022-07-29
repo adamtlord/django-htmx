@@ -1,0 +1,7 @@
+{% if form.non_field_errors %}
+<div class="bg-red-100 text-red-700 border border-red-700 rounded-md py-2 px-3 text-sm">
+  {% for err in form.non_field_errors %}
+    <p>{{ err }}</p>
+  {% endfor %}
+</div>
+{% endif %}

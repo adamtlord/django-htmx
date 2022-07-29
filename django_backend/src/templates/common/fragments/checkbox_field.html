@@ -1,11 +1,15 @@
-<p id="id_{{ form_field.html_name }}_container" class="checkbox-control{% if css_classes %} {{ css_classes }}{% endif %}{% if form_field.errors %} has-error{% endif %}">
-    <label for="id_{{ form_field.html_name }}">
-        {{ form_field }}{{ form_field.label }}{% if form_field.field.required %} <span class="req">*</span>{% endif %}<i class="helper"></i>
-    </label>
-    {% if help_text %}
-        <span class="help">{{ help_text }}</span>
-    {% endif %}
-    {% if form_field.errors %}
-        <span class="help is-danger">{{ form_field.errors }}</span>
-    {% endif %}
-</p>
+{% load form_tags %}
+<div class="relative flex items-start">
+    <div class="flex items-center h-5">
+        {{ form_field|add_class:'focus:ring-green-500 h-4 w-4 text-green-600 border-gray-300 rounded' }}
+    </div>
+    <div class="ml-3 text-sm">
+        <label for="id_{{ form_field.html_name }}" class="font-medium text-gray-700">{{ form_field.label }}{% if form_field.field.required %} <sup class="req">*</sup>{% endif %}</label>
+        {% if help_text %}
+            <p class="text-gray-500">{{ help_text }}</p>
+        {% endif %}
+        {% if form_field.errors %}
+            <p class="text-red-600">{{ form_field.errors.as_text }}</p>
+        {% endif %}
+    </div>
+</div>

@@ -1,6 +1,7 @@
 version: "3.8"
 
 volumes:
+  db-data:
   static-data:
 
 services:
@@ -9,6 +10,8 @@ services:
     platform: linux/amd64
     restart: unless-stopped
     image: postgres:12.8-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
     env_file:
       - ./django_backend/.env
 
@@ -30,6 +33,7 @@ services:
     command: bash -c "waitforit -host=db -port=5432 --timeout 30 &&
           python3 /code/manage.py collectstatic --no-input &&
           python3 /code/manage.py migrate &&
+          python3 /code/manage.py initadmin &&
           python3 /code/manage.py runserver 0.0.0.0:8000"
     depends_on:
       - db

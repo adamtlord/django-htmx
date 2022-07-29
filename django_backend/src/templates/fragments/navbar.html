@@ -19,8 +19,10 @@
     <div class="flex">
       <ul class="flex space-x-4">
         {% if user.is_authenticated %}
-        <li><a href="{% url 'account_email' %}">Change E-mail</a></li>
-        <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+        <li><button
+          hx-get="{% url 'account_logout' %}"
+          hx-target="#authModal"
+          @click="open = true">Sign Out</button></li>
         {% else %}
         <li><button
             hx-get="{% url 'account_login' %}"

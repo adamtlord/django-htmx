@@ -49,7 +49,7 @@ ENV_MIDDLEWARES = []
 
 
 # Application definition
-PROJECT_APPS = ["core", "marketing"]
+PROJECT_APPS = ["core", "marketing", "accounts", "demo"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -60,10 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.github",
+    "django_htmx",
 ]
 
 INSTALLED_APPS += ENV_APPS + PROJECT_APPS
@@ -76,6 +73,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 MIDDLEWARE = ENV_MIDDLEWARES + MIDDLEWARE
@@ -104,45 +102,39 @@ TEMPLATES = [
 WSGI_APPLICATION = "wsgi.application"
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
     "django.contrib.auth.backends.ModelBackend",
-    # `allauth` specific authentication methods, such as login by e-mail
-    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 # Password validation
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
-]
+# AUTH_PASSWORD_VALIDATORS = [
+#     {
+#         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+#     },
+#     {
+#         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+#     },
+# ]
 
+AUTH_USER_MODEL = "accounts.User"
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+LOGIN_URL = "/"
+LOGIN_REDIRECT_URL = LOGIN_URL
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 SITE_ID = 1
 
-SOCIALACCOUNT_PROVIDERS = {
-    "github": {
-        "APP": {"client_id": "8213512841339294e2fe", "secret": "d8ef43042b6e11c08487d759ec0d66c7375e8616", "key": ""}
-    }
-}
 
 ##
 ## Databases
