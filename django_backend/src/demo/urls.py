@@ -1,6 +1,10 @@
 from django.urls import include, path
-from demo.views import dashboard_view
+from django.views.generic import RedirectView
+from demo.views import app_view, dashboard_view, table_view, todo_view
 
 urlpatterns = [
-    path("", dashboard_view, name="dashboard"),
+    path("", RedirectView.as_view(pattern_name='dashboard', permanent=False), name="app"),
+    path("dashboard", dashboard_view, name="dashboard"),
+    path("table", table_view, name="table"),
+    path("todo", todo_view, name="todo"),
 ]

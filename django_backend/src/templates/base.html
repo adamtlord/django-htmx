@@ -1,6 +1,7 @@
 <!doctype html>
 <html
   x-data="App"
+  class="h-full"
   x-bind:class="{ 'dark': darkMode }"
   lang=""
 >
@@ -12,7 +13,7 @@
   {% include 'fragments/header_includes.html' %}
 </head>
 
-<body class="bg-white dark:bg-black text-gray-900 dark:text-gray-100">
+<body class="bg-white dark:bg-black text-gray-900 dark:text-gray-100 h-full">
 {% block body %}
 <div class="flex flex-col min-h-screen">
   {% include 'fragments/navbar.html' %}
@@ -23,9 +24,7 @@
   </main>
   {% include 'fragments/footer.html' %}
 </div>
-
 {% endblock %}
-
 {% include 'fragments/footer_includes.html' %}
 </body>
 </html>
