@@ -124,8 +124,8 @@ AUTH_USER_MODEL = "accounts.User"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-LOGIN_URL = "/"
-LOGIN_REDIRECT_URL = LOGIN_URL
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/demo/"
 
 # Internationalization
 LANGUAGE_CODE = "en-us"

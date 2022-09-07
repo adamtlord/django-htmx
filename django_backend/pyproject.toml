@@ -19,9 +19,9 @@ flake8 = "3.8.*"
 
 # Gunicorn
 gunicorn = "^20.0.4"
-gevent = "^20.9.0"
 tzdata = "^2022.1"
 django-htmx = "^1.12.0"
+Faker = "^14.0.0"
 
 [tool.poetry.dev-dependencies]
 black = {version = "19.10b0", allow-prereleases = true, python = "^3.8", markers = "platform_python_implementation == 'CPython'"}

@@ -43,7 +43,7 @@ class AccountLoginView(HTMXFormClientResponseMixin, HTMXPartialTemplateMixin, Lo
 login_view = AccountLoginView.as_view()
 
 
-class AccountLogoutView(TemplateView):
+class AccountLogoutView(HTMXPartialTemplateMixin, TemplateView):
     template_name = "registration/logout.html"
 
 logout_confirm_view = AccountLogoutView.as_view()

@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block main %}
-<div class="my-12">
+<div class="my-12 text-center">
   <h1 class="text-5xl text-green-700 dark:text-green-200 font-bold tracking-tight">Djang<span class="font-thin text-green-500">low.js</span></h1>
+  {% if request.user.is_authenticated %}
+  <p class="my-8">
+    <a href="{% url 'dashboard' %}"
+      class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">Go to Demo</a>
+  </p>
+  {% endif %}
 </div>
 {% endblock %}

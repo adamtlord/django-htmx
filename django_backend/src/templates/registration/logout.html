@@ -1,16 +1,26 @@
-{% load form_tags %}
-<div class="pb-4 mb-4 border-b border-gray-200 dark:border-gray-600">
-  <h3 class="text-xl leading-6 font-bold">Log out</h3>
-</div>
-<form method="post" action="{% url 'logout' %}">
-  {% csrf_token %}
-  <p>
-    Are you sure you want to log out?
-  </p>
-  {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <div class="mt-5 sm:mt-6">
-    <button type="submit" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">Yes, log me out</button>
+{% extends base_template %} {% load form_tags %} {% block main %}
+<div class="max-w-lg mx-auto">
+  <div class="pb-4 mb-4 border-b border-gray-200 dark:border-gray-600">
+    <h3 class="text-xl leading-6 font-bold">Log out</h3>
   </div>
-</form>
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <p>Are you sure you want to log out?</p>
+    {% if redirect_field_value %}
+    <input
+      type="hidden"
+      name="{{ redirect_field_name }}"
+      value="{{ redirect_field_value }}"
+    />
+    {% endif %}
+    <div class="mt-5 sm:mt-6">
+      <button
+        type="submit"
+        class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm"
+      >
+        Yes, log me out
+      </button>
+    </div>
+  </form>
+</div>
+{% endblock %}
