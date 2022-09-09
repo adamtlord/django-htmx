@@ -1,2 +1,42 @@
+.idea
+*.DS_Store
+*~
+
+# python
+__pycache__
+*.pyc
+
+# Javascript
+node_modules/
+
+# environment
+.vscode/
+.env
+
+# django
+staticserve/
+uploads/*
+dump*.sql
+database.db
+logs
+*.log
+*.retry
+
+# frontend app
+node_modules/
+stats.json
+webpack-stats.json
+
+# db
+*.sql
+
+# ops
+**/.terragrunt-cache
+**/*.tmp
+*~
+*.swp
+*.swo
+*.pem
+
 /django_backend/index.js.map
 /django_backend/index.js

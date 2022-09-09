@@ -1,6 +1,6 @@
 {% load form_tags %}
 <div {% if css_classes %}class="{{ css_classes }}"{% endif %}>
-    <label for="id_{{ form_field.html_name }}" class="block font-medium text-gray-700">{{ form_field.label }}{% if form_field.field.required %} <sup class="sr-only req">*</sup>{% endif %}</label>
+    <label for="id_{{ form_field.html_name }}" class="block font-medium text-gray-700 dark:text-gray-200">{{ form_field.label }}{% if form_field.field.required %} <sup class="sr-only req">*</sup>{% endif %}</label>
     {% if form_field.errors %}
         <div class="mt-1 relative rounded-md shadow-sm">
             {{ form_field|add_class:'block w-full pr-10 border-red-300 text-red-900 placeholder-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 sm:text-sm rounded-md' }}

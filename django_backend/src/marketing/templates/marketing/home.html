@@ -1,12 +1,30 @@
 {% extends "base.html" %}
 {% block main %}
 <div class="my-12 text-center">
-  <h1 class="text-5xl text-green-700 dark:text-green-200 font-bold tracking-tight">Djang<span class="font-thin text-green-500">low.js</span></h1>
+  <h1 class="text-6xl text-green-700 dark:text-green-200 font-bold tracking-tight">Djang<span
+      class="font-thin text-green-500">Low JS</span></h1>
+  <p class="mx-auto mt-8 max-w-xl text-xl text-gray-500">Let servers do what they're good at.</p>
+  <ul class="mt-6">
+    <li>&bull;
+      <a href="https://edofic.com/posts/2022-01-28-low-js/" target="_blank"
+        class="text-green-500 underline underline-offset-2 hover:no-underline">Some inspiration</a>
+    </li>
+    <li>&bull;
+      <a href="https://htmx.org/essays/a-response-to-rich-harris/"
+        class="text-green-500 underline underline-offset-2 hover:no-underline" target="_blank">Some pot-stirring</a>
+    </li>
+    <li>&bull;
+      <a href="https://www.saaspegasus.com/guides/modern-javascript-for-django-developers/htmx-alpine/" target="_blank"
+        class="text-green-500 underline underline-offset-2 hover:no-underline">My starting
+        point</a></li>
+  </ul>
   {% if request.user.is_authenticated %}
   <p class="my-8">
     <a href="{% url 'dashboard' %}"
-      class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">Go to Demo</a>
+      class="inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-700 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">Go
+      to Demo</a>
   </p>
+  <p class="text-sm text-gray-500 italic">It's Django + "low js." Get it?</p>
   {% endif %}
 </div>
 {% endblock %}

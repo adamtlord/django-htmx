@@ -8,6 +8,8 @@ from django.http import HttpRequest, HttpResponse
 from django.views.decorators.http import require_GET, require_http_methods
 from django.shortcuts import render
 from demo.models import Person
+from core.decorators import htmx_login_required
+
 
 class HTMXAppTemplateMixin:
     def get_context_data(self, **kwargs):
@@ -20,27 +22,27 @@ class HTMXAppTemplateMixin:
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):
-    template_name = "demo/dashboard.html"
+    template_name = "demo/dashboard_page.html"
 
 
 dashboard_view = DashboardView.as_view()
 
 
 class TableView(LoginRequiredMixin, TemplateView):
-    template_name = "demo/table.html"
+    template_name = "demo/table_page.html"
 
 
 table_view = TableView.as_view()
 
 
 class TodoView(LoginRequiredMixin, TemplateView):
-    template_name = "demo/todo.html"
+    template_name = "demo/todo_page.html"
 
 
 todo_view = TodoView.as_view()
 
 
-@login_required
+@htmx_login_required
 def person_list(request: HttpRequest) -> HttpResponse:
     page_num = request.GET.get("page", "1")
     people = Person.objects.all()
@@ -55,7 +57,8 @@ def person_list(request: HttpRequest) -> HttpResponse:
 
     d = {
         "page": page,
-        "paginator": paginator
+        "count": paginator.count,
+        "page_range": paginator.get_elided_page_range(page_num, on_each_side=1, on_ends=2)
     }
 
     return render(

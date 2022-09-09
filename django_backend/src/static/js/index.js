@@ -3,6 +3,7 @@
 const App = () => ({
   darkMode: localStorage.getItem('dark') === 'true' || (!('dark' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
   sidebarOpen: false,
+  modalOpen: false,
   profileDropdown: false,
   activeNav: '',
   toggleDarkMode() {
