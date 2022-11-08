@@ -8,6 +8,7 @@ from django.http import HttpRequest, HttpResponse
 from django.views.decorators.http import require_GET, require_http_methods
 from django.shortcuts import render
 from demo.models import Person
+from faker import Faker
 from core.decorators import htmx_login_required
 
 
@@ -45,9 +46,10 @@ todo_view = TodoView.as_view()
 @htmx_login_required
 def person_list(request: HttpRequest) -> HttpResponse:
     page_num = request.GET.get("page", "1")
+    per_page = request.GET.get("perPage", "10")
     people = Person.objects.all()
     template = "demo/person_table.html"
-    paginator = Paginator(people, 10)
+    paginator = Paginator(people, int(per_page))
     try:
         page = paginator.page(page_num)
     except PageNotAnInteger:
@@ -59,6 +61,47 @@ def person_list(request: HttpRequest) -> HttpResponse:
         "page": page,
         "count": paginator.count,
         "page_range": paginator.get_elided_page_range(page_num, on_each_side=1, on_ends=2)
+    }
+
+    return render(
+        request,
+        template,
+        d
+    )
+
+
+@htmx_login_required
+def featured_people(request: HttpRequest) -> HttpResponse:
+    people = Person.objects.all().order_by('?')[:4]
+    template = "demo/featured_people.html"
+
+    d = {
+        "people": people
+    }
+
+    return render(
+        request,
+        template,
+        d
+    )
+
+@htmx_login_required
+def random_stat(request: HttpRequest) -> HttpResponse:
+    template = "demo/stat_card.html"
+    fake = Faker()
+
+    stat1 = fake.random_number(digits=5)
+    add = fake.boolean()
+    difference = fake.random_int(max=stat1)
+    factor = 1 if add else -1
+    stat2 = stat1 + (factor * difference)
+
+    d = {
+        "stat1": stat1,
+        "add": add,
+        "difference": f'{(difference / stat1)*100:.2f}',
+        "factor": factor,
+        "stat2": stat2,
     }
 
     return render(

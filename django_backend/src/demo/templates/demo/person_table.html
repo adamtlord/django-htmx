@@ -3,8 +3,45 @@
 <div class="flex flex-col">
   <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-        <table class="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
+      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg dark:ring-gray-700">
+        <div class="px-3 py-3.5 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
+          <!-- results per page -->
+          <div class="flex items-center">
+            <label for="email" class="block text-sm">Results Per Page</label>
+            <select name="perPage"
+              x-model="pageSize"
+              hx-get="{% url 'person_list' %}"
+              hx-trigger="change"
+              hx-target="#table"
+              class="ml-3 block focus:ring-green-500 focus:border-green-500 shadow-sm w-auto sm:text-sm border-gray-300 rounded-md dark:text-gray-100 dark:focus:text-gray-100 dark:bg-gray-900 dark:border-gray-600">
+              <option>10</option>
+              <option>25</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+          <!-- /results per page -->
+          <!-- search -->
+          {% comment %} <div class="">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                <!-- Heroicon name: solid/search -->
+                <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                  fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                    clip-rule="evenodd" />
+                </svg>
+              </div>
+              <input id="search" name="search"
+                class="shadow-sm block w-auto bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-700 focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm dark:text-gray-100 dark:focus:text-gray-100 dark:bg-gray-900 dark:border-gray-600"
+                placeholder="Search" type="search">
+            </div>
+          </div> {% endcomment %}
+          <!-- /search -->
+        </div>
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead class="bg-gray-50 text-left font-semibold dark:bg-gray-700">
             <tr>
               <th scope="col" class="py-3.5 pl-4 pr-3 sm:pl-6">Name</th>
@@ -16,7 +53,7 @@
           </thead>
           <tbody class="divide-y divide-gray-200 dark:divide-gray-800 dark:bg-gray-900">
             {% for person in page.object_list %}
-            <tr>
+            <tr{% if forloop.counter|divisibleby:2 %} class="bg-gray-50 dark:bg-gray-800" {% endif %}>
               <td class="whitespace-nowrap px-3 py-4 font-medium">{{person.firstname }}
                 {{person.lastname}}
               </td>
@@ -25,8 +62,8 @@
                 {% if person.likes_dogs %}🐶{% endif %}{% if person.likes_cats %} 🐱{% endif %}</td>
               <td class="whitespace-nowrap px-3 py-4 text-center">{{person.dob|age_from_dob}}</td>
               <td class="whitespace-nowrap px-3 py-4">{{person.get_role_display}}</td>
-            </tr>
-            {% endfor %}
+              </tr>
+              {% endfor %}
           </tbody>
         </table>
         {% if page.has_other_pages %}
