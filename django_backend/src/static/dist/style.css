@@ -698,6 +698,9 @@ select{
 .mb-4{
   margin-bottom: 1rem;
 }
+.-ml-1{
+  margin-left: -0.25rem;
+}
 .mt-8{
   margin-top: 2rem;
 }
@@ -721,9 +724,6 @@ select{
 }
 .ml-2{
   margin-left: 0.5rem;
-}
-.-ml-1{
-  margin-left: -0.25rem;
 }
 .mr-0\.5{
   margin-right: 0.125rem;
@@ -826,6 +826,12 @@ select{
 }
 .w-4{
   width: 1rem;
+}
+.w-28{
+  width: 7rem;
+}
+.w-80{
+  width: 20rem;
 }
 .min-w-full{
   min-width: 100%;
@@ -1138,6 +1144,9 @@ select{
 .p-8{
   padding: 2rem;
 }
+.p-2{
+  padding: 0.5rem;
+}
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1169,10 +1178,6 @@ select{
 .py-3{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-}
-.py-5{
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
 }
 .py-4{
   padding-top: 1rem;
@@ -1379,6 +1384,10 @@ select{
   --tw-text-opacity: 1;
   color: rgb(127 29 29 / var(--tw-text-opacity));
 }
+.text-green-400{
+  --tw-text-opacity: 1;
+  color: rgb(74 222 128 / var(--tw-text-opacity));
+}
 .underline{
   text-decoration-line: underline;
 }
@@ -1406,6 +1415,15 @@ select{
 }
 .opacity-0{
   opacity: 0;
+}
+.opacity-25{
+  opacity: 0.25;
+}
+.opacity-75{
+  opacity: 0.75;
+}
+.opacity-50{
+  opacity: 0.5;
 }
 .shadow-lg{
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);

@@ -1,19 +1,19 @@
 version: "3.8"
 
 volumes:
-  # db-data:
+  db-data:
   static-data:
 
 services:
 
-  # db:
-  #   platform: linux/amd64
-  #   restart: unless-stopped
-  #   image: postgres:12.8-alpine
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-  #   env_file:
-  #     - ./django_backend/.env
+  db:
+    platform: linux/amd64
+    restart: unless-stopped
+    image: postgres:12.8-alpine
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - ./django_backend/.env
 
   backend:
     restart: unless-stopped
@@ -30,13 +30,14 @@ services:
     # Use for when you need the container up but not the dev server (e.g., initial migrations).
     # Note that the config change will trigger compose to reinstance the container.
     # command: bash -c "waitforit -host=db -port=5432 --timeout 30 && echo ready && sleep infinity"
-    command: bash -c "python3 /code/manage.py collectstatic --no-input &&
+    command: bash -c "waitforit -host=db -port=5432 --timeout 30 &&
+          python3 /code/manage.py collectstatic --no-input &&
           python3 /code/manage.py migrate &&
           python3 /code/manage.py initadmin &&
           python3 /code/manage.py fakedata &&
           python3 /code/manage.py runserver 0.0.0.0:8000"
-    # depends_on:
-    #   - db
+    depends_on:
+      - db
     volumes:
       - static-data:/static
       - ./django_backend/:/code

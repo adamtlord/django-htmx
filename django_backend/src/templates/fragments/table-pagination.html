@@ -28,7 +28,7 @@
       </p>
     </div>
     <div>
-      <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination" hx-target="#table">
+      <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
         {% if page.has_previous %}
         <a hx-get="{% url 'person_list' %}?page={{ page.previous_page_number }}"
           class="cursor-pointer relative inline-flex items-center rounded-l-md border border-gray-300 dark:border-gray-500 px-2 py-2 text-sm font-medium  hover:bg-gray-50 focus:z-20">

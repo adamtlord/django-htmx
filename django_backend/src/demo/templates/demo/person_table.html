@@ -1,6 +1,6 @@
 {% load core_filters %}
 
-<div class="flex flex-col">
+<div class="flex flex-col" hx-include="[name='pp'], [name='q']" hx-target="#table">
   <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
       <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg dark:ring-gray-700">
@@ -8,21 +8,17 @@
           <!-- results per page -->
           <div class="flex items-center">
             <label for="email" class="block text-sm">Results Per Page</label>
-            <select name="perPage"
-              x-model="pageSize"
+            <select name="pp"
               hx-get="{% url 'person_list' %}"
-              hx-trigger="change"
-              hx-target="#table"
               class="ml-3 block focus:ring-green-500 focus:border-green-500 shadow-sm w-auto sm:text-sm border-gray-300 rounded-md dark:text-gray-100 dark:focus:text-gray-100 dark:bg-gray-900 dark:border-gray-600">
-              <option>10</option>
-              <option>25</option>
-              <option>50</option>
-              <option>100</option>
+              {% for n in page_size_options %}
+                <option value="{{n}}" {% if per_page == n %}selected{% endif %}>{{n}}</option>
+              {% endfor %}
             </select>
           </div>
           <!-- /results per page -->
           <!-- search -->
-          {% comment %} <div class="">
+          <div class="">
             <label for="search" class="sr-only">Search</label>
             <div class="relative">
               <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
@@ -34,11 +30,14 @@
                     clip-rule="evenodd" />
                 </svg>
               </div>
-              <input id="search" name="search"
+              <input name="q"
+                hx-get="{% url 'person_list' %}"
+                hx-trigger="keyup changed delay:500ms"
+                value="{{query}}"
                 class="shadow-sm block w-auto bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-700 focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm dark:text-gray-100 dark:focus:text-gray-100 dark:bg-gray-900 dark:border-gray-600"
-                placeholder="Search" type="search">
+                placeholder="Search" type="text">
             </div>
-          </div> {% endcomment %}
+          </div>
           <!-- /search -->
         </div>
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">

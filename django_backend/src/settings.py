@@ -55,13 +55,13 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
+    "django.contrib.humanize",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
     "django.contrib.sites",
     "django_htmx",
-    "django.contrib.humanize",
 ]
 
 INSTALLED_APPS += ENV_APPS + PROJECT_APPS
@@ -148,6 +148,14 @@ DATABASES = {
         "PASSWORD": "%s" % get_secret("POSTGRES_PASSWORD"),
         "HOST": "%s" % get_secret("POSTGRES_HOST"),
         "PORT": get_secret("POSTGRES_PORT", default_value=5432, required=False),
+    },
+    "bitdotio": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "%s" % get_secret("BITIO_POSTGRES_DB"),
+        "USER": "%s" % get_secret("BITIO_POSTGRES_USER"),
+        "PASSWORD": "%s" % get_secret("BITIO_POSTGRES_PASSWORD"),
+        "HOST": "%s" % get_secret("BITIO_POSTGRES_HOST"),
+        "PORT": get_secret("BITIO_POSTGRES_PORT", default_value=5432, required=False),
     },
 }
 
