@@ -5,7 +5,49 @@
     <h1 class="text-2xl font-semibold">Table</h1>
   </div>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-    <div id="table" class="py-4" hx-get="{% url 'person_list' %}" hx-trigger="load">
+    <div class="py-4 flex flex-col" hx-include="[name='pp'], [name='q']" hx-target="#table">
+      <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg dark:ring-gray-700">
+            <div class="px-3 py-3.5 flex justify-between items-center border-b border-gray-200 dark:border-gray-700">
+              <!-- results per page -->
+              <div class="flex items-center">
+                <label for="email" class="block text-sm">Results Per Page</label>
+                <select name="pp" hx-get="{% url 'person_list' %}"
+                  class="ml-3 block focus:ring-green-500 focus:border-green-500 shadow-sm w-auto sm:text-sm border-gray-300 rounded-md dark:text-gray-100 dark:focus:text-gray-100 dark:bg-gray-900 dark:border-gray-600">
+                  <option value="10" selected>10</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                  <option value="100">100</option>
+                </select>
+              </div>
+              <!-- /results per page -->
+              <!-- search -->
+              <div class="">
+                <label for="search" class="sr-only">Search</label>
+                <div class="relative">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                    <!-- Heroicon name: solid/search -->
+                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                      fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <input name="q" hx-get="{% url 'person_list' %}" hx-trigger="keyup[target.value.length > 3] changed delay:500ms"
+                    class="shadow-sm block w-auto bg-white border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-700 focus:placeholder-gray-400 focus:ring-1 focus:ring-green-500 focus:border-green-500 sm:text-sm dark:text-gray-100 dark:focus:text-gray-100 dark:bg-gray-900 dark:border-gray-600"
+                    placeholder="Search" type="text">
+                </div>
+              </div>
+              <!-- /search -->
+            </div>
+            <div id="table" hx-get="{% url 'person_list' %}" hx-trigger="load">
+              {% include 'fragments/spinner.html' with classes='py-10' %}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

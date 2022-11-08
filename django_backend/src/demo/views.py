@@ -28,7 +28,6 @@ class HTMXAppTemplateMixin:
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "demo/dashboard_page.html"
 
-
 dashboard_view = DashboardView.as_view()
 
 
@@ -70,10 +69,7 @@ def person_list(request: HttpRequest) -> HttpResponse:
     d = {
         "page": page,
         "count": paginator.count,
-        "page_range": paginator.get_elided_page_range(page_num, on_each_side=1, on_ends=2),
-        "per_page": per_page,
-        "query": query,
-        "page_size_options": ["10", "25", "50", "100"],
+        "page_range": paginator.get_elided_page_range(page_num, on_each_side=1, on_ends=2)
     }
 
     return render(request, template, d)
