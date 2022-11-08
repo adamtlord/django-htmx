@@ -141,10 +141,6 @@ SITE_ID = 1
 ## Databases
 ##
 DATABASES = {
-    # "default": dj_database_url.config(
-    #     default="postgresql://adamtlord:v2_3vPg3_MwsUC92NRpCRbYGqf2YFuy6@db.bit.io/adamtlord/djanglowjs?sslmode=require",
-    #     conn_max_age=600,
-    # ),
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "%s" % get_secret("POSTGRES_DB"),
