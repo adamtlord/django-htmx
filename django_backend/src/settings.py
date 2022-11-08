@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django.contrib.sites",
     "django_htmx",
+    "django.contrib.humanize",
 ]
 
 INSTALLED_APPS += ENV_APPS + PROJECT_APPS
@@ -140,6 +141,10 @@ SITE_ID = 1
 ## Databases
 ##
 DATABASES = {
+    # "default": dj_database_url.config(
+    #     default="postgresql://adamtlord:v2_3vPg3_MwsUC92NRpCRbYGqf2YFuy6@db.bit.io/adamtlord/djanglowjs?sslmode=require",
+    #     conn_max_age=600,
+    # ),
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "%s" % get_secret("POSTGRES_DB"),
@@ -147,7 +152,7 @@ DATABASES = {
         "PASSWORD": "%s" % get_secret("POSTGRES_PASSWORD"),
         "HOST": "%s" % get_secret("POSTGRES_HOST"),
         "PORT": get_secret("POSTGRES_PORT", default_value=5432, required=False),
-    }
+    },
 }
 
 # Data / file settings
