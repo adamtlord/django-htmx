@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const formsPlugin = require('@tailwindcss/forms');
 
 module.exports = {
   darkMode: 'class',
@@ -12,6 +13,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
+    formsPlugin,
   ],
 };

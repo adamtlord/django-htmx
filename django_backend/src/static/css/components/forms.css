@@ -1,4 +1,10 @@
 
-.input{
-  @apply mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+.dark {
+  [type='text'],[type='email'],[type='url'],[type='password'],[type='number'],[type='date'],[type='datetime-local'],[type='month'],[type='search'],[type='tel'],[type='time'],[type='week'],[multiple],textarea,select {
+    color: currentColor;
+  },
+  [type="checkbox"]:checked,
+  [type="radio"]:checked {
+    background-color: currentColor;
+  }
 }
