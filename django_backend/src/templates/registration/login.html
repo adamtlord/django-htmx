@@ -6,7 +6,7 @@
     <h3 class="text-xl leading-6 font-bold">Log in</h3>
     <p><a class="text-green-600 underline hover:no-underline" {% if partial %}href hx-get="{% url 'account_signup' %}" hx-target="#authModal"{% else %}href="{% url 'account_signup' %}"{% endif %}>Sign up</a></p>
   </div>
-  <form hx-post="{% url 'account_login' %}" hx-target="#authModal">
+  <form hx-post="{% url 'account_login' %}" {% if partial %}hx-target="#authModal"{% else %}hx-target="#main"{% endif %}>
     {% csrf_token %}
     <div class="space-y-5">
       {% include 'fragments/non_field_errors.html' %}
