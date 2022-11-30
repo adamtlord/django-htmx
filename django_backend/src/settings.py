@@ -1,7 +1,7 @@
 import os
 import sys
 import json
-
+import dj_database_url
 
 AWS_REGION = os.getenv("AWS_REGION") or "eu-west-1"
 
@@ -141,7 +141,7 @@ SITE_ID = 1
 ## Databases
 ##
 DATABASES = {
-    "default": {
+    "onprem": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "%s" % get_secret("POSTGRES_DB"),
         "USER": "%s" % get_secret("POSTGRES_USER"),
@@ -149,14 +149,7 @@ DATABASES = {
         "HOST": "%s" % get_secret("POSTGRES_HOST"),
         "PORT": get_secret("POSTGRES_PORT", default_value=5432, required=False),
     },
-    "bitdotio": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "%s" % get_secret("BITIO_POSTGRES_DB"),
-        "USER": "%s" % get_secret("BITIO_POSTGRES_USER"),
-        "PASSWORD": "%s" % get_secret("BITIO_POSTGRES_PASSWORD"),
-        "HOST": "%s" % get_secret("BITIO_POSTGRES_HOST"),
-        "PORT": get_secret("BITIO_POSTGRES_PORT", default_value=5432, required=False),
-    },
+    "default": dj_database_url.config(conn_max_age=600)
 }
 
 # Data / file settings
