@@ -27,7 +27,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # Initadmin Users (username, email, password)
 ADMINS = (("admin", "admin@tivix.com", "admin!rules"),)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(' ')
 
 # Env extensions
 ENV_APPS = []
@@ -139,4 +140,5 @@ MEDIA_ROOT = BASE_DIR / 'data/mediafiles'
 if ENV == "dev":
     IS_DEV = True
     DEBUG = True
+    ALLOWED_HOSTS = ["*"]
     TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
