@@ -40,3 +40,4 @@ webpack-stats.json
 
 /django_backend/index.js.map
 /django_backend/index.js
+/django_backend/venv

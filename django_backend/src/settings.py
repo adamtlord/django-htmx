@@ -1,47 +1,33 @@
 import os
 import sys
-import json
 import dj_database_url
+from pathlib import Path
+from dotenv import load_dotenv
 
-AWS_REGION = os.getenv("AWS_REGION") or "eu-west-1"
-
-
-def get_secret(secret_name, default_value=None, path="", required=True, region_name=AWS_REGION):
-    if secret_name in os.environ:
-        return os.environ[secret_name]
-
-    else:
-        if required:
-            raise Exception(f"No value found for required environment variable {secret_name}")
-        else:
-            return default_value
-
+BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 # Get the ENV settings
-ENV = get_secret("ENV")
+ENV = os.getenv("ENV")
 if not ENV:
     raise Exception("Environment variable ENV is required!")
 
 # Environment settings
-DEBUG = False
+DEBUG = os.getenv("DEBUG")
 IS_DEV = False
 IS_STAGING = False
 IS_PROD = False
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # project root and add "apps" to the path
 PROJECT_ROOT = BASE_DIR
 sys.path.append(os.path.join(PROJECT_ROOT, "apps/"))
 
-SECRET_KEY = get_secret("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # Initadmin Users (username, email, password)
 ADMINS = (("admin", "admin@tivix.com", "admin!rules"),)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Env extensions
 ENV_APPS = []
@@ -105,21 +91,7 @@ WSGI_APPLICATION = "wsgi.application"
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
-# Password validation
-# AUTH_PASSWORD_VALIDATORS = [
-#     {
-#         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-#     },
-#     {
-#         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-#     },
-#     {
-#         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-#     },
-#     {
-#         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-#     },
-# ]
+
 
 AUTH_USER_MODEL = "accounts.User"
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
@@ -136,94 +108,35 @@ USE_L10N = True
 USE_TZ = True
 SITE_ID = 1
 
-
 ##
-## Databases
+#  Databases
 ##
 DATABASES = {
-    "onprem": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "%s" % get_secret("POSTGRES_DB"),
-        "USER": "%s" % get_secret("POSTGRES_USER"),
-        "PASSWORD": "%s" % get_secret("POSTGRES_PASSWORD"),
-        "HOST": "%s" % get_secret("POSTGRES_HOST"),
-        "PORT": get_secret("POSTGRES_PORT", default_value=5432, required=False),
-    },
     "default": dj_database_url.config(conn_max_age=600)
 }
 
 # Data / file settings
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20971520  # 20MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 4194304  # 4mb
-DATA_VOLUME = "/data"
-UPLOADS_DIR_NAME = "uploads"
-MEDIA_URL = "/%s/" % UPLOADS_DIR_NAME
-MEDIA_ROOT = os.path.join(DATA_VOLUME, "%s" % UPLOADS_DIR_NAME)
 
 STATIC_URL = "/static/"
-STATIC_ROOT = "/static"
+STATIC_ROOT = BASE_DIR / 'data/staticfiles'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "src", "static"),
 ]
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    # "compressor.finders.CompressorFinder",
 ]
 
-# Log settings
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "verbose": {"format": "[django] %(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"}
-    },
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "stream": sys.stdout,
-            "formatter": "verbose",
-        },
-    },
-    "loggers": {
-        "": {
-            "handlers": ["console"],
-            "level": "INFO",
-            "propagate": True,
-        },
-        "django": {
-            "handlers": ["console"],
-            "level": "ERROR",
-        },
-        "huey.consumer": {
-            "handlers": ["console"],
-            "level": "INFO",
-        },
-    },
-}
-
-if "test" in sys.argv:
-    IS_TEST = True
-    LOGGING["handlers"]["console"] = {"class": "logging.NullHandler"}
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'data/mediafiles'
 
 ##
 # Env overrides
 ##
-# Per-env constants and overrides.
-# If a setting is used by a single environment, needs to be overriden for a
-# single environment, and isn't otherwise defined using os.getenv() or
-# get_secret(), put it here.
+
 if ENV == "dev":
     IS_DEV = True
     DEBUG = True
-    ALLOWED_HOSTS = ["*"]
     TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
-
-
-ENV_LOGGING = {"handlers": {}, "loggers": {}}
-
-
-LOGGING["handlers"].update(ENV_LOGGING["handlers"])
-LOGGING["loggers"].update(ENV_LOGGING["loggers"])

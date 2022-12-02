@@ -1,38 +1,31 @@
-FROM python:3.8-alpine3.12 AS base
+# pull official base image
+FROM python:3.9.6-alpine
 
-LABEL authors="Michal Kopacki <michal.kopacki@tivix.com>, Michal Weinert <michal.weinert@tivix.com>"
+# set work directory
+WORKDIR /usr/src/app
 
-ARG env
-ENV ENV ${env:-dev}
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 RUN apk update
-RUN apk add --upgrade --no-cache "postgresql-client" "postgresql-contrib" "postgresql-dev" bash curl
-RUN apk add --upgrade --no-cache py-pip g++ linux-headers gcc make libffi-dev uwsgi-python uwsgi wget
+RUN apk add --upgrade --no-cache g++ gcc
 
-RUN apk add --upgrade --no-cache python3 python3-dev openssl-dev cargo
+# create the app directory - and switch to it
+RUN mkdir -p /app
+WORKDIR /app
 
-ENV WAITFORIT_VERSION="v2.2.0"
-RUN curl -o /usr/local/bin/waitforit -sSL https://github.com/maxcnunes/waitforit/releases/download/$WAITFORIT_VERSION/waitforit-linux_amd64 && \
-    chmod +x /usr/local/bin/waitforit
+# install dependencies
+COPY requirements.txt /tmp/requirements.txt
+RUN set -ex && \
+    pip install --upgrade pip && \
+    pip install -r /tmp/requirements.txt && \
+    rm -rf /root/.cache/
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+# copy project
+COPY . /app/
 
-ADD . /code/
-
-WORKDIR /code
-
-# make poetry available in image && do not create a virtualEnv && install dependencies w/o user input
-RUN source $HOME/.poetry/env && poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
-
-WORKDIR /
-
-RUN mkdir -p /data/static
-
-VOLUME /data
-
+# expose port 8000
 EXPOSE 8000
 
-WORKDIR /code
-
-## Dev image, for use during local development
-FROM base AS dev
+CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "src.wsgi:application"]
