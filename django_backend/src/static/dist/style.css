@@ -698,9 +698,6 @@ select{
 .mb-4{
   margin-bottom: 1rem;
 }
-.-ml-1{
-  margin-left: -0.25rem;
-}
 .mt-8{
   margin-top: 2rem;
 }
@@ -724,6 +721,9 @@ select{
 }
 .ml-2{
   margin-left: 0.5rem;
+}
+.-ml-1{
+  margin-left: -0.25rem;
 }
 .mr-0\.5{
   margin-right: 0.125rem;
@@ -779,23 +779,20 @@ select{
 .h-32{
   height: 8rem;
 }
+.h-3{
+  height: 0.75rem;
+}
 .h-96{
   height: 24rem;
 }
 .h-4{
   height: 1rem;
 }
-.h-3{
-  height: 0.75rem;
-}
 .min-h-screen{
   min-height: 100vh;
 }
 .min-h-full{
   min-height: 100%;
-}
-.min-h-\[150px\]{
-  min-height: 150px;
 }
 .w-6{
   width: 1.5rem;
@@ -827,20 +824,14 @@ select{
 .w-0{
   width: 0px;
 }
+.w-3{
+  width: 0.75rem;
+}
 .w-auto{
   width: auto;
 }
 .w-4{
   width: 1rem;
-}
-.w-28{
-  width: 7rem;
-}
-.w-80{
-  width: 20rem;
-}
-.w-3{
-  width: 0.75rem;
 }
 .min-w-full{
   min-width: 100%;
@@ -921,6 +912,9 @@ select{
 }
 .cursor-pointer{
   cursor: pointer;
+}
+.list-disc{
+  list-style-type: disc;
 }
 .grid-cols-1{
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -1153,9 +1147,6 @@ select{
 .p-8{
   padding: 2rem;
 }
-.p-2{
-  padding: 0.5rem;
-}
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
@@ -1208,10 +1199,6 @@ select{
   padding-top: 0px;
   padding-bottom: 0px;
 }
-.py-12{
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
 .py-10{
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -1237,17 +1224,23 @@ select{
 .pb-12{
   padding-bottom: 3rem;
 }
+.pl-4{
+  padding-left: 1rem;
+}
 .pl-3{
   padding-left: 0.75rem;
+}
+.pr-4{
+  padding-right: 1rem;
 }
 .pl-10{
   padding-left: 2.5rem;
 }
-.pl-4{
-  padding-left: 1rem;
+.pl-12{
+  padding-left: 3rem;
 }
-.pr-4{
-  padding-right: 1rem;
+.pb-2{
+  padding-bottom: 0.5rem;
 }
 .pr-10{
   padding-right: 2.5rem;
@@ -1365,10 +1358,6 @@ select{
   --tw-text-opacity: 1;
   color: rgb(236 72 153 / var(--tw-text-opacity));
 }
-.text-gray-300{
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
-}
 .text-purple-800{
   --tw-text-opacity: 1;
   color: rgb(107 33 168 / var(--tw-text-opacity));
@@ -1401,10 +1390,6 @@ select{
   --tw-text-opacity: 1;
   color: rgb(127 29 29 / var(--tw-text-opacity));
 }
-.text-green-400{
-  --tw-text-opacity: 1;
-  color: rgb(74 222 128 / var(--tw-text-opacity));
-}
 .underline{
   text-decoration-line: underline;
 }
@@ -1435,9 +1420,6 @@ select{
 }
 .opacity-25{
   opacity: 0.25;
-}
-.opacity-75{
-  opacity: 0.75;
 }
 .opacity-50{
   opacity: 0.5;
@@ -1535,6 +1517,12 @@ select{
   .dark [type="radio"]:checked {
     background-color: currentColor;
   }
+.marker\:text-green-600 *::marker{
+  color: rgb(22 163 74 );
+}
+.marker\:text-green-600::marker{
+  color: rgb(22 163 74 );
+}
 .focus-within\:text-gray-600:focus-within{
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
@@ -1559,27 +1547,12 @@ select{
   --tw-bg-opacity: 1;
   background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
-.hover\:bg-gray-700:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(55 65 81 / var(--tw-bg-opacity));
-}
-.hover\:bg-gray-200:hover{
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
 .hover\:text-gray-500:hover{
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
-.hover\:text-green-600:hover{
-  --tw-text-opacity: 1;
-  color: rgb(22 163 74 / var(--tw-text-opacity));
-}
 .hover\:no-underline:hover{
   text-decoration-line: none;
-}
-.hover\:opacity-100:hover{
-  opacity: 1;
 }
 .focus\:z-20:focus{
   z-index: 20;
@@ -1637,25 +1610,13 @@ select{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
 }
-.focus\:ring-red-500:focus{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity));
-}
-.focus\:ring-gray-500:focus{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(107 114 128 / var(--tw-ring-opacity));
-}
-.focus\:ring-gray-200:focus{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(229 231 235 / var(--tw-ring-opacity));
-}
-.focus\:ring-green-200:focus{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(187 247 208 / var(--tw-ring-opacity));
-}
 .focus\:ring-green-600:focus{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(22 163 74 / var(--tw-ring-opacity));
+}
+.focus\:ring-red-500:focus{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(239 68 68 / var(--tw-ring-opacity));
 }
 .focus\:ring-offset-2:focus{
   --tw-ring-offset-width: 2px;
